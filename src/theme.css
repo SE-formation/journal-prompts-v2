@@ -1,0 +1,58 @@
+/* Theme tokens — change the look of the whole app from here.
+   Values measured from the original (capture.json). */
+:root {
+  /* Colours */
+  --c-page: #f6f4f0;
+  --c-surface: #ffffff;
+  --c-text: #111111;
+  --c-muted: #5f5b54;
+  --c-border: #d8d4cc;
+  --c-subtle: #eeeae3;
+  --c-brand: #0f2a5c; /* dark blue header (was red #e30613) */
+  --c-on-brand: #ffffff;
+  --c-accent: #f39200;
+  --c-highlight: #ffd500;
+  --c-strong: #111111;
+  --c-on-strong: #ffffff;
+  --c-success-bg: #e3f1e8;
+  --c-success-fg: #145c34;
+  --c-switch-track: rgba(255, 255, 255, 0.2);
+
+  /* Fonts */
+  --font-display: "Bricolage Grotesque", "Arial Rounded MT Bold", system-ui, sans-serif;
+  --font-body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+
+  /* Radii */
+  --r-pill: 999px;
+  --r-header: 32px;
+  --r-card: 28px;
+  --r-toast: 28px;
+  --r-notice: 24px;
+  --r-field: 24px;
+
+  /* Title */
+  --title-size: 2rem;
+
+  /* Layout */
+  --content-width: 560px;
+
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --c-page: #151412;
+    --c-surface: #22201d;
+    --c-text: #f2efe9;
+    --c-muted: #aaa59b;
+    --c-border: #3d3a34;
+    --c-subtle: #2d2a26;
+    --c-brand: #0b2149;
+    --c-strong: #f2efe9;
+    --c-on-strong: #111111;
+    --c-success-bg: #16382a;
+    --c-success-fg: #8fdcae;
+    color-scheme: dark;
+  }
+}

@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Journal de prompts</title>
+<meta name="description" content="Saisir et dater ses prompts IA pour l'annexe du PPI ou du PPC (MSDI, IFC).">
+<meta name="theme-color" content="#0f2a5c">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon.svg">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Prompts">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Source+Sans+3:wght@400;600&family=JetBrains+Mono&display=swap">
+<link rel="stylesheet" href="theme.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="masthead">
+  <div class="masthead__row">
+    <h1 id="title" class="masthead__title">Mes prompts</h1>
+    <div class="switch" role="group" aria-label="Épreuve">
+      <button type="button" data-exam="PPI" aria-pressed="true">PPI</button>
+      <button type="button" data-exam="PPC" aria-pressed="false">PPC</button>
+    </div>
+  </div>
+  <p class="masthead__tagline">Un prompt utile ? Gardez-en la trace pour votre annexe. <span id="offline" class="offline" hidden>hors ligne</span></p>
+</header>
+
+<main>
+  <section id="screen-saisir" data-screen="saisir">
+    <form id="entryForm" class="stack" novalidate>
+      <div id="setupNotice" class="notice">Avant le premier envoi, collez votre adresse d'envoi Make dans <b>Réglages</b>.</div>
+      <div id="queueNotice" class="notice notice--row" hidden>
+        <span id="queueText">0 prompt en attente d'envoi</span>
+        <button class="pill-btn" id="retryBtn" type="button">Renvoyer</button>
+      </div>
+
+      <fieldset>
+        <legend>Outil IA</legend>
+        <div class="chips" id="toolChips"></div>
+      </fieldset>
+
+      <fieldset class="model">
+        <legend id="modelLegend">Modèle de l'IA</legend>
+        <div class="chips chips--model" id="modelChips"></div>
+        <input id="modelOther" class="model__other" type="text" maxlength="80" aria-label="Autre modèle" placeholder="Précisez le modèle : ex. Claude Opus 4" autocomplete="off" hidden>
+      </fieldset>
+
+      <fieldset>
+        <legend>Partie du dossier</legend>
+        <div class="chips chips--accent" id="partChips"></div>
+      </fieldset>
+
+      <label for="stepSelect">Étape
+        <select id="stepSelect" required></select>
+      </label>
+
+      <div class="card">
+        <input id="goalInput" type="text" maxlength="300" aria-label="Objectif du prompt" placeholder="Objectif : ex. reformuler ma problématique" autocomplete="off">
+        <textarea id="promptInput" required aria-label="Prompt" placeholder="Collez ici le prompt tel que vous l'avez envoyé à l'IA."></textarea>
+        <div class="card__foot">
+          <div class="card__tools">
+            <button class="pill-btn" type="button" id="pasteBtn">Coller</button>
+            <button class="pill-btn" type="button" id="clearBtn">Effacer</button>
+          </div>
+          <span class="counter" id="charCount">0 car.</span>
+        </div>
+      </div>
+
+      <button class="cta" id="sendBtn" type="submit">Enregistrer</button>
+    </form>
+  </section>
+
+  <section id="screen-historique" data-screen="historique" hidden>
+    <div class="stack">
+      <input id="searchInput" type="search" aria-label="Rechercher un prompt" placeholder="Rechercher : PESTEL, CRM, problématique…" autocomplete="off">
+      <span class="eyebrow" id="historyCount"></span>
+      <ul class="entries" id="historyList"></ul>
+    </div>
+  </section>
+
+  <section id="screen-reglages" data-screen="reglages" hidden>
+    <div class="stack">
+      <h2>Réglages</h2>
+      <p class="help help--flush">Ces réglages restent sur ce téléphone. Les prompts ne partent que vers votre propre scénario Make.</p>
+      <label for="hookInput">Adresse d'envoi (webhook Make)
+        <input id="hookInput" type="url" inputmode="url" placeholder="https://hook.eu1.make.com/…" autocomplete="off" spellcheck="false">
+      </label>
+      <label for="defaultExam">Épreuve par défaut
+        <select id="defaultExam"><option>PPI</option><option>PPC</option></select>
+      </label>
+      <button class="cta" type="button" id="saveSettingsBtn">Enregistrer les réglages</button>
+      <div class="help">
+        <p><b>Lien pré-rempli :</b> <code id="prefillLink">https://se-formation.github.io/journal-prompts/?hook=ADRESSE</code> enregistre l'adresse d'envoi à la première ouverture.</p>
+        <p><b>Android :</b> une fois l'appli installée, sélectionnez un texte dans ChatGPT, Claude ou Gemini › <b>Partager</b> › <b>Prompts</b>.</p>
+        <p><b>iPhone :</b> copiez le prompt, ouvrez l'appli, touchez <b>Coller</b>.</p>
+      </div>
+      <button class="outline-btn" type="button" id="wipeBtn">Vider l'historique local</button>
+      <p class="help" id="versionText">Version 1.2.0</p>
+    </div>
+  </section>
+</main>
+
+<nav class="tabbar" aria-label="Navigation">
+  <button type="button" data-go="saisir" aria-current="page">Saisir</button>
+  <button type="button" data-go="historique">Historique</button>
+  <button type="button" data-go="reglages">Réglages</button>
+</nav>
+
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<script type="module" src="main.js"></script>
+</body>
+</html>

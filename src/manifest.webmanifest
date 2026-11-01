@@ -1,0 +1,19 @@
+{
+  "name": "Journal de prompts",
+  "short_name": "Prompts",
+  "description": "Saisir et dater ses prompts IA pour l'annexe du PPI ou du PPC.",
+  "lang": "fr",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f6f4f0",
+  "theme_color": "#0f2a5c",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ],
+  "share_target": {
+    "action": "./",
+    "method": "GET",
+    "params": { "title": "title", "text": "text" }
+  }
+}
